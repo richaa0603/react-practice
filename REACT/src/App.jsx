@@ -1,17 +1,22 @@
-import { useState } from 'react'
+import './App.css'
+import Navbar from './components/Navbar'
+import About from './components/About'
+import Skills from './components/Skills'
+import Education from './components/Education'
+import SocialLinks from './components/SocialLinks'
+
 function App() {
-  const[count, setCount] = useState(0);
-  function Increment(){
-    setCount((prev) =>  prev +1);
-  }
-  function Decrement (){
-    setCount ((prev) => prev -1);
-  }
-  return <>
-  <h1> Counter App</h1>
-  <h2>Count :{count}</h2>
-  <button onClick={Increment}>Increment</button>
-  <button onClick={Decrement}>Decrement</button>
-  </>
+  return (
+    <>
+      <Navbar />
+      <main className="container">
+        <About />
+        <Skills />
+        <Education />
+        <SocialLinks />
+      </main>
+    </>
+  )
 }
-export default App;
+
+export default App
