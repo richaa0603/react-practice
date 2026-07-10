@@ -1,42 +1,72 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import './App.css';
 
-function App() {
-
-  const [count, setCount] = useState(0);
-
-  function Increment() {
-    setCount((prev) => prev + 1);
-  }
-  function Decrement() {
-    setCount((prev) => prev - 1);
-  }
-
+function Home() {
   return (
-    <div>
-
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/navbar">Navbar</Link>
-      </nav>
-
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              <h1>Counter App</h1>
-              <h2>{count}</h2>
-              <button onClick={Increment}>Increment</button>
-              <button onClick={Decrement}>Decrement</button>
-            </div>
-          }
-        />
-        <Route path="/navbar" element={<Navbar name="My navbar" />} />
-      </Routes>
+    <div className="home">
+      <div className="home-card">
+        <span className="wave">👋</span>
+        <h1 className="home-title">Welcome!</h1>
+        <p className="home-sub">Richa says hello.</p>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+function getMood(count) {
+  if (count === 0) return { emoji: '😐', label: 'Zero zone' };
+  if (count > 0 && count < 5)  return { emoji: '🙂', label: 'Getting started!' };
+  if (count >= 5 && count < 10) return { emoji: '😄', label: 'On a roll!' };
+  if (count >= 10) return { emoji: '🔥', label: 'On fire!!' };
+  if (count < 0 && count > -5)  return { emoji: '😬', label: 'Going down...' };
+  return { emoji: '💀', label: 'Way too low!' };
+}
+
+function Counter() {
+  const [count, setCount] = useState(0);
+  const mood = getMood(count);
+
+  return (
+    <div className="counter-page">
+      <div className="counter-card">
+        <h1 className="counter-title">🎮 Count Game</h1>
+        <div className="counter-mood">
+          <span className="counter-emoji">{mood.emoji}</span>
+          <p className="counter-label">{mood.label}</p>
+        </div>
+        <h2
+          className="counter-number"
+          style={{ color: count > 0 ? '#22c55e' : count < 0 ? '#ef4444' : 'var(--text-h)' }}
+        >
+          {count}
+        </h2>
+        <div className="counter-btns">
+          <button className="btn btn-inc" onClick={() => setCount((p) => p + 1)}>+ Increment</button>
+          <button className="btn btn-reset" onClick={() => setCount(0)}>Reset</button>
+          <button className="btn btn-dec" onClick={() => setCount((p) => p - 1)}>− Decrement</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function About() {
+  return <h1>About Page</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/counter" element={<Counter />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
